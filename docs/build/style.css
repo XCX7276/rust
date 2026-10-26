@@ -1,0 +1,283 @@
+:root {
+  --bg: #0d0f14;
+  --surface: #151923;
+  --surface2: #1b2030;
+  --border: #262c3d;
+  --text: #e7e9f0;
+  --text2: #c3c8d6;
+  --muted: #8f98ad;
+  --gold: #f0b54a;
+  --cyan: #56d4e0;
+  --violet: #a78bfa;
+  --green: #6fdc8c;
+  --red: #f07a6a;
+}
+
+@page {
+  size: A4; margin: 18mm 17mm 20mm 17mm; background: #0d0f14;
+  @bottom-left { content: "Parodia · журнал разработки"; font-family: 'Noto Sans CJK SC'; font-size: 7.5pt; color: #6b7390; }
+  @bottom-right { content: counter(page) " / " counter(pages); font-family: 'DejaVu Sans Mono'; font-size: 7.5pt; color: #6b7390; }
+}
+@page cover { margin: 0; @bottom-left { content: none; } @bottom-right { content: none; } }
+
+* { box-sizing: border-box; }
+html, body { background: var(--bg); }
+body {
+  margin: 0;
+  color: var(--text2);
+  font-family: 'Noto Sans CJK SC', 'DejaVu Sans', 'Liberation Sans', sans-serif;
+  font-size: 10pt;
+  line-height: 1.6;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+b, strong { color: var(--text); font-weight: 700; }
+a { color: var(--cyan); text-decoration: none; }
+
+/* ---------------- cover ---------------- */
+.cover {
+  page: cover;
+  height: 297mm;
+  padding: 22mm 20mm 18mm;
+  display: flex; flex-direction: column;
+  background:
+    radial-gradient(ellipse 70% 45% at 50% 34%, rgba(86,212,224,0.13), transparent 70%),
+    linear-gradient(180deg, #0b0d12 0%, #11141d 100%);
+  position: relative;
+  break-after: page;
+}
+.cover::before { /* pixel grid texture */
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 8mm 8mm;
+  pointer-events: none;
+}
+.cover > * { position: relative; }
+.cover-top { display: flex; gap: 8px; }
+.pill {
+  font-size: 8.5pt; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--bg); background: var(--gold); font-weight: 700;
+  padding: 4px 10px; border-radius: 3px;
+}
+.pill.ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); font-weight: 500; }
+.cover-art { flex: 1; display: flex; align-items: center; justify-content: center; }
+.crystal { width: 118mm; height: auto; filter: drop-shadow(0 0 18px rgba(86,212,224,0.35)); }
+.cover h1 {
+  font-family: 'Lora', serif; font-weight: 700;
+  color: var(--text); font-size: 34pt; line-height: 1.12; margin: 0 0 10px;
+}
+.cover h1 span { color: var(--cyan); }
+.cover-sub { color: var(--muted); font-size: 11.5pt; margin: 0 0 16mm; }
+.refs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 14mm; }
+.refs div {
+  background: rgba(21,25,35,0.85); border: 1px solid var(--border); border-top: 3px solid var(--gold);
+  border-radius: 4px; padding: 9px 10px;
+}
+.refs b { display: block; font-size: 9.5pt; }
+.refs span { color: var(--muted); font-size: 8.5pt; }
+.cover-foot { color: var(--muted); font-size: 9pt; border-top: 1px solid var(--border); padding-top: 8px; }
+
+/* ---------------- toc ---------------- */
+.toc { break-after: page; }
+.toc-h {
+  font-family: 'Lora', serif; color: var(--text); font-size: 24pt; margin: 4mm 0 8mm;
+  border: none !important;
+}
+.toc ol { list-style: none; padding: 0; margin: 0; }
+.toc li { border-bottom: 1px solid var(--border); }
+.toc a { display: flex; align-items: baseline; gap: 14px; padding: 9px 2px; color: var(--text); font-size: 12pt; }
+.toc .num { font-family: 'DejaVu Sans Mono', monospace; color: var(--gold); font-size: 10pt; width: 26px; }
+
+/* ---------------- headings ---------------- */
+h2 {
+  display: flex; align-items: baseline; gap: 12px;
+  font-family: 'Lora', serif; font-weight: 700; color: var(--text);
+  font-size: 19pt; line-height: 1.25;
+  margin: 12mm 0 4mm; padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  break-after: avoid;
+}
+main > h2:first-child { margin-top: 0; }
+h2 .num {
+  font-family: 'DejaVu Sans Mono', monospace; font-size: 10pt; font-weight: 700;
+  color: var(--bg); background: var(--gold); padding: 2px 6px; border-radius: 2px;
+  position: relative; top: -3px;
+}
+h3 {
+  color: var(--text); font-size: 12pt; font-weight: 700;
+  margin: 7mm 0 2.5mm; break-after: avoid;
+  display: flex; align-items: center; gap: 8px;
+}
+h3::before { content: ''; width: 7px; height: 7px; background: var(--cyan); flex: none; }
+h4 { color: var(--text); font-size: 11pt; margin: 0 0 4px; }
+
+p { margin: 0 0 3mm; }
+p.lead {
+  font-size: 11pt; color: var(--text); line-height: 1.55;
+  border-left: 3px solid var(--cyan); padding: 2px 0 2px 12px; margin-bottom: 5mm;
+}
+
+ul, ol { padding-left: 18px; margin: 0 0 3mm; }
+li { margin: 0 0 1.6mm; }
+li::marker { color: var(--gold); }
+
+code {
+  font-family: 'DejaVu Sans Mono', monospace; font-size: 8.6pt;
+  background: var(--surface2); color: #f3d38c; padding: 1px 5px; border-radius: 3px;
+  border: 1px solid var(--border);
+}
+
+/* ---------------- code blocks ---------------- */
+.codehilite {
+  background: #0a0c11 !important; border: 1px solid var(--border); border-radius: 6px;
+  padding: 10px 14px; margin: 0 0 4mm; break-inside: avoid;
+  border-left: 3px solid var(--violet);
+}
+.codehilite pre { margin: 0; font-family: 'DejaVu Sans Mono', monospace; font-size: 8.4pt; line-height: 1.55; white-space: pre-wrap; }
+.codehilite code { background: none; border: none; padding: 0; color: #d4d8e2; font-size: inherit; }
+.codehilite .c1, .codehilite .cm { color: #7a8499 !important; font-style: italic; }
+
+/* ---------------- tables ---------------- */
+table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  margin: 0 0 5mm; font-size: 9pt; line-height: 1.45;
+  border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+}
+thead th {
+  background: var(--surface2); color: var(--text); text-align: left; font-weight: 700;
+  padding: 7px 9px; border-bottom: 1px solid var(--border); font-size: 8.8pt;
+}
+tbody td { padding: 6px 9px; border-bottom: 1px solid var(--border); vertical-align: top; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:nth-child(even) td { background: rgba(255,255,255,0.018); }
+tr { break-inside: avoid; }
+td:first-child { color: var(--text); }
+
+.tag {
+  display: inline-block; font-size: 7.8pt; font-weight: 700; letter-spacing: .02em;
+  padding: 1px 7px; border-radius: 3px; white-space: nowrap;
+  color: var(--cyan); border: 1px solid rgba(86,212,224,0.45); background: rgba(86,212,224,0.08);
+}
+.tag.good { color: #0d0f14; background: var(--green); border-color: var(--green); }
+.tag.muted { color: var(--muted); border-color: var(--border); background: transparent; }
+
+/* ---------------- callouts / formula ---------------- */
+.callout {
+  background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.35);
+  border-radius: 6px; padding: 9px 13px; margin: 0 0 5mm; break-inside: avoid;
+}
+.callout p:last-child { margin: 0; }
+.callout.warn { background: rgba(240,122,106,0.08); border-color: rgba(240,122,106,0.4); }
+.formula {
+  font-family: 'DejaVu Sans Mono', monospace; font-size: 10.5pt; color: var(--text);
+  text-align: center; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 12px; margin: 0 0 4mm;
+}
+.formula .op { color: var(--gold); font-weight: 700; }
+
+/* ---------------- crafting tiers ---------------- */
+.tiers { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 5mm; }
+.tier {
+  display: flex; gap: 10px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 11px 12px; break-inside: avoid;
+}
+.tier-num {
+  flex: none; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
+  font-family: 'DejaVu Sans Mono', monospace; font-weight: 700; color: var(--bg); background: var(--cyan);
+}
+.tier:nth-child(3) .tier-num { background: var(--violet); }
+.tier:nth-child(4) .tier-num { background: var(--gold); }
+.tier-body p { font-size: 9.2pt; margin: 0 0 6px; }
+
+/* ---------------- diagram ---------------- */
+.diagram { margin: 2mm 0 4mm; break-inside: avoid; }
+.diagram svg { width: 100%; height: auto; display: block; }
+
+/* ---------------- roadmap ---------------- */
+.roadmap { position: relative; margin: 0 0 5mm; }
+.roadmap::before {
+  content: ''; position: absolute; left: 13px; top: 8px; bottom: 8px; width: 2px;
+  background: linear-gradient(var(--cyan), var(--violet));
+}
+.stage { display: flex; gap: 12px; margin-bottom: 8px; position: relative; break-inside: avoid; }
+.marker {
+  flex: none; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+  background: var(--bg); border: 2px solid var(--cyan); color: var(--cyan);
+  font-family: 'DejaVu Sans Mono', monospace; font-weight: 700; font-size: 10pt; z-index: 1;
+}
+.stage.milestone .marker { background: var(--gold); border-color: var(--gold); color: var(--bg); }
+.stage.future .marker { border-style: dashed; border-color: var(--violet); color: var(--violet); }
+.stage .card {
+  flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px;
+}
+.stage.milestone .card { border-color: rgba(240,181,74,0.5); }
+.stage .head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
+.stage .name { color: var(--text); font-weight: 700; font-size: 10.5pt; }
+.stage .dur { font-family: 'DejaVu Sans Mono', monospace; font-size: 8.5pt; color: var(--muted); }
+.stage p { margin: 0; font-size: 9.2pt; }
+.stage .note { margin-top: 5px; font-size: 8.8pt; color: var(--gold); font-weight: 700; }
+.stage .note::before { content: '◆ '; }
+
+/* ---------------- tasks ---------------- */
+ul.tasks { list-style: none; padding-left: 0; }
+ul.tasks li { display: flex; gap: 10px; align-items: flex-start; }
+.box {
+  flex: none; width: 12px; height: 12px; margin-top: 4px;
+  border: 1.5px solid var(--cyan); border-radius: 2px;
+}
+
+/* ---------------- sources ---------------- */
+.sources { margin-top: 10mm; padding-top: 4mm; border-top: 1px solid var(--border); font-size: 9pt; }
+.sources h3 { margin-top: 0; }
+
+/* ================= журнал ================= */
+h2#cheat, h2#tracker, h2#log, h2#plan { break-before: page; margin-top: 0; }
+
+.status-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 0 0 5mm; }
+.scard { background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--cyan); border-radius: 5px; padding: 8px 10px; }
+.slabel { font-size: 7.8pt; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+.sval { color: var(--text); font-weight: 700; font-size: 10pt; line-height: 1.3; margin-top: 3px; }
+
+/* шаги шпаргалки */
+.steps { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 0 0 5mm; }
+.step { display: flex; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; break-inside: avoid; }
+.sn { flex: none; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
+      font-family: 'DejaVu Sans Mono', monospace; font-weight: 700; color: var(--bg); background: var(--cyan); }
+.warnstep { border: 2px solid var(--gold); }
+.warnstep .sn { background: var(--gold); }
+.warnstep h4::after { content: '  ◆ важно'; font-size: 8pt; color: var(--gold); font-weight: 700; }
+.sb h4 { margin: 2px 0 4px; }
+.sb p { font-size: 9pt; margin: 0 0 5px; }
+pre.cmd { margin: 4px 0 0; background: #0a0c11; border: 1px solid var(--border); border-left: 3px solid var(--violet);
+          border-radius: 4px; padding: 6px 9px; font-family: 'DejaVu Sans Mono', monospace; font-size: 8.4pt; color: #d4d8e2; }
+
+/* статусы: ВСЕГДА слово + знак, цвет — лишь дополнение */
+.st { display: inline-block; font-family: 'DejaVu Sans', sans-serif; font-size: 7.8pt; font-weight: 700;
+      letter-spacing: .03em; padding: 1px 7px; border-radius: 3px; white-space: nowrap; border: 1px solid; }
+.st.done { color: #0d0f14; background: var(--green); border-color: var(--green); }
+.st.work { color: #0d0f14; background: var(--gold); border-color: var(--gold); }
+.st.open { color: var(--text); border-color: var(--text2); background: transparent; }
+.st.hold { color: var(--muted); border-color: var(--border); border-style: dashed; background: transparent; }
+.legend { display: flex; gap: 8px; margin: 0 0 4mm; }
+
+/* журнал */
+.timeline { position: relative; margin: 0 0 5mm; }
+.timeline::before { content: ''; position: absolute; left: 82px; top: 6px; bottom: 6px; width: 2px; background: var(--border); }
+.entry { display: flex; gap: 22px; margin-bottom: 9px; break-inside: avoid; position: relative; }
+.entry .date { flex: none; width: 70px; text-align: right; font-family: 'DejaVu Sans Mono', monospace; font-size: 8.6pt; color: var(--gold); padding-top: 9px; }
+.entry::after { content: ''; position: absolute; left: 78px; top: 12px; width: 10px; height: 10px; background: var(--bg); border: 2px solid var(--cyan); }
+.ebody { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; }
+.ebody h4 { margin: 0 0 3px; }
+.ebody p { font-size: 9pt; margin: 0 0 4px; }
+.ebody .emeta { color: var(--muted); font-size: 8.4pt; margin: 0; }
+
+/* этапы: статус знаком в маркере + словом справа */
+.stage.done .marker { background: var(--green); border-color: var(--green); color: var(--bg); }
+.stage.current .marker { background: var(--gold); border-color: var(--gold); color: var(--bg); }
+.stage.current .card { border: 2px solid var(--gold); }
+.stage .dur { font-weight: 700; }
+.stage { margin-bottom: 6px; }
+#tracker ~ table td:first-child, table td:first-child strong { white-space: nowrap; }
+h2#decisions { break-before: page; margin-top: 0; }
